@@ -17,8 +17,8 @@ uint8_t at24write(I2C_HandleTypeDef * eeprom, uint8_t * buf, uint16_t len, uint1
         } else {
             length = 0x10 - (current_offset & 0b00001111);
         }
-        printf("write: %x, %x, %d\n", ((current_offset >> 8) << 1), current_offset&0xff, length);
-        HAL_I2C_Mem_Write(eeprom, 0xa0 | ((current_offset&0xff00 >> 8) << 1), current_offset&0xff, I2C_MEMADD_SIZE_8BIT, &buf[len-remain], length , 1000);
+        HAL_I2C_Mem_Write(eeprom, 0xa0 | ((current_offset >> 8) << 1), current_offset&0xff, I2C_MEMADD_SIZE_8BIT, &buf[len-remain], length , 1000);
+        HAL_Delay(5);
         current_offset += length;
         remain -= length;
     } while (remain);
